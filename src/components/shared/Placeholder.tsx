@@ -1,0 +1,26 @@
+import { ReactNode } from "react";
+
+interface PageProps {
+    title: string;
+    description: string;
+    children?: ReactNode;
+}
+
+export const Placeholder = ({ title, description, children }: PageProps) => {
+    return (
+        <div className="space-y-4 p-4 md:p-6">
+            {/* HEADER */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                <div>
+                    <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+                    <p className="text-muted-foreground text-sm mt-1">{description}</p>
+                </div>
+            </div>
+
+            {/* CONTENT AREA */}
+            <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+                {children}
+            </div>
+        </div>
+    )
+}
