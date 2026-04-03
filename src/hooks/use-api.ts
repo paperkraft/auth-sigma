@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { auth_api } from '@/config';
 
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
 
@@ -6,14 +7,20 @@ export function useApi() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
-    const request = useCallback(async (url: string, method: HttpMethod, payload?: any) => {
+    const request = useCallback(async (
+        url: string,
+        method: HttpMethod,
+        payload?: any,
+        withCredentials = true,
+        isRetry = false
+    ): Promise<{ data: any; error: string | null }> => {
         setIsLoading(true);
         setError(null);
 
         try {
             const options: RequestInit = {
                 method,
-                credentials: "include",
+                credentials: withCredentials ? "include" : "omit",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -26,6 +33,26 @@ export function useApi() {
             const res = await fetch(url, options);
             const result = await res.json();
 
+            // Handle 401 Unauthorized
+            if (result.resMsg === "Unauthorized" && !isRetry && !url.includes('/refreshToken') && !url.includes('/auth/sign-in') && withCredentials) {
+                const refreshRes = await fetch(`${auth_api}/refreshToken`, {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/json' }
+                });
+
+                if (refreshRes.ok) {
+                    // Retry original request
+                    return await request(url, method, payload, withCredentials, true);
+                } else {
+                    // Refresh failed, redirect to sign-in
+                    if (typeof window !== 'undefined' && !window.location.pathname.includes('/auth/sign-in')) {
+                        window.location.replace(`/auth/sign-in?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+                    }
+                    throw new Error("Session expired. Please sign in again.");
+                }
+            }
+
             if (!res.ok) {
                 throw new Error(result.message || result.resMsg || "Request failed");
             }
@@ -36,15 +63,24 @@ export function useApi() {
             setError(errorMessage);
             return { data: null, error: errorMessage };
         } finally {
-            setIsLoading(false);
+            if (!isRetry) setIsLoading(false);
         }
     }, []);
 
-    const get = useCallback((url: string) => request(url, 'GET'), [request]);
-    const post = useCallback((url: string, payload?: any) => request(url, 'POST', payload), [request]);
-    const put = useCallback((url: string, payload?: any) => request(url, 'PUT', payload), [request]);
-    const del = useCallback((url: string, payload?: any) => request(url, 'DELETE', payload), [request]);
-    const patch = useCallback((url: string, payload?: any) => request(url, 'PATCH', payload), [request]);
+    const get = useCallback((url: string, withCredentials = true) =>
+        request(url, 'GET', undefined, withCredentials), [request]);
+
+    const post = useCallback((url: string, payload?: any, withCredentials = true) =>
+        request(url, 'POST', payload, withCredentials), [request]);
+
+    const put = useCallback((url: string, payload?: any, withCredentials = true) =>
+        request(url, 'PUT', payload, withCredentials), [request]);
+
+    const del = useCallback((url: string, payload?: any, withCredentials = true) =>
+        request(url, 'DELETE', payload, withCredentials), [request]);
+
+    const patch = useCallback((url: string, payload?: any, withCredentials = true) =>
+        request(url, 'PATCH', payload, withCredentials), [request]);
 
     return {
         isLoading,
