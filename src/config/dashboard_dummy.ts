@@ -2,31 +2,31 @@
 export const RECENT_PROJECTS = [
     {
         id: "p1",
-        name: "Kolhapur Corporation",
-        type: "AquaBill",
+        name: "Identity Audit 2026",
+        type: "Security",
         lastEdited: "2 hours ago",
         status: "success",
-        thumbnail: "https://images.unsplash.com/photo-1544377193-33dcf4d68fb5?q=80&w=2670&auto=format&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=2670&auto=format&fit=crop",
     },
     {
         id: "p2",
-        name: "Water Distribution Network",
-        type: "WaterLab",
+        name: "Permission Matrix Review",
+        type: "Governance",
         lastEdited: "1 week ago",
         status: "success",
-        thumbnail: "https://images.unsplash.com/photo-1476973422084-e0fa66ff9456?q=80&w=2670&auto=format&fit=crop",
+        thumbnail: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672&auto=format&fit=crop",
     },
     {
         id: "p3",
-        name: "Simulation Network",
-        type: "WaterLab",
+        name: "Multi-Factor Rollout",
+        type: "Auth",
         lastEdited: "1 week ago",
         status: "draft",
     },
 ];
 
 export const ACTIVITY_FEED = [
-    { id: 1, text: "Simulation 'Run 4' completed successfully.", time: "10m ago", type: "success" },
-    { id: 2, text: "Project 'Valve Test' was shared with you.", time: "2h ago", type: "info" },
-    { id: 3, text: "Core hour limit reached (80%).", time: "5h ago", type: "warning" },
+    { id: 1, text: "Security policy 'MFA Enforcement' updated.", time: "10m ago", type: "success" },
+    { id: 2, text: "Organization profile was updated by Admin.", time: "2h ago", type: "info" },
+    { id: 3, text: "Monthly active user limit reached (80%).", time: "5h ago", type: "warning" },
 ];

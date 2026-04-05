@@ -13,34 +13,23 @@ export interface ProjectMetadata {
 export const DUMMY_PROJECTS: ProjectMetadata[] = [
     {
         id: "proj-1",
-        type: "waterlab",
-        name: "Water Network Analysis",
-        description: "Urban water distribution modeling",
+        type: "security",
+        name: "Login Audit Log",
+        description: "Review of recent login attempts and patterns",
         lastModified: '1/24/2026',
-        nodeCount: 120,
-        linkCount: 150,
     },
     {
         id: "proj-2",
-        type: "aquabill",
-        name: "City Water Billing",
-        description: "Water Billing for area",
+        type: "governance",
+        name: "Role Compliance Registry",
+        description: "List of all user roles and their respective permissions",
         lastModified: '1/24/2026',
     },
     {
         id: "proj-3",
-        type: "waterlab",
-        name: "EPANET Simulation",
-        description: "Hydraulic simulation project",
-        lastModified: '1/24/2026',
-        nodeCount: 180,
-        linkCount: 200,
-    },
-    {
-        id: "proj-4",
-        type: "aquabill",
-        name: "Villlage Water Billing",
-        description: "Monitoring utilities and assets",
+        type: "security",
+        name: "Credential Rotation Log",
+        description: "History of password and key rotations",
         lastModified: '1/24/2026',
     },
 ];
@@ -48,7 +37,7 @@ export const DUMMY_PROJECTS: ProjectMetadata[] = [
 
 export async function getProjectMetadata(
     params: Promise<{ projectId: string }>,
-    type: "waterlab" | "aquabill"
+    type: string
 ): Promise<Metadata> {
     const { projectId } = await params;
 

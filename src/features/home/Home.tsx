@@ -99,14 +99,14 @@ export default function Home() {
                   <div className="space-y-5">
                      <QuotaItem
                         icon={<GitFork size={14} />}
-                        label="Pipes"
+                        label="Auth Events"
                         used={450}
                         total={1000}
                         color="bg-primary"
                      />
                      <QuotaItem
                         icon={<FileText size={14} />}
-                        label="Bills"
+                        label="Security Logs"
                         used={82}
                         total={100}
                         color="bg-amber-500"
