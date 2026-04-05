@@ -15,7 +15,7 @@ export const SERVICES: ServiceConfig[] = [
         id: "auth",
         name: "Sigma Toolbox",
         description: "Manage your profile, security settings, and team access from a central location.",
-        url: "http://localhost:4000",
+        url: "http://localhost:5000",
         icon: ShieldCheck,
         color: "text-blue-600 bg-blue-50 border-blue-100 dark:bg-blue-900/30 dark:text-blue-300 dark:border-blue-800",
         themeColor: "blue",

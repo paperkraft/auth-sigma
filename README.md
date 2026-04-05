@@ -1,4 +1,5 @@
 # Folder Structure 
+```
 📁 High-Level Structure
 
 src/
@@ -117,3 +118,4 @@ src/components/
 │
 └── auth/
     └── auth-guard.tsx
+```
